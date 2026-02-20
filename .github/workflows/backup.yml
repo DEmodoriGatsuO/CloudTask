@@ -1,0 +1,45 @@
+name: Backup D1 Database
+
+on:
+  # シードリセット（18:00 UTC）の10分前にバックアップ
+  schedule:
+    - cron: '50 17 * * *'
+  # 手動実行も可能
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: '20'
+  DATABASE_ID: 'e9ed4977-8f7c-47f8-9aad-ed8349abb712'
+
+jobs:
+  backup:
+    name: Export D1 to SQL dump
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Export D1 database
+        run: |
+          wrangler d1 export cloudtask-db \
+            --remote \
+            --output backup-$(date +'%Y-%m-%d').sql
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Upload backup as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: d1-backup-${{ github.run_number }}-${{ github.sha }}
+          path: backup-*.sql
+          # 90日間保持（GitHub Actionsの最大値）
+          retention-days: 90
+          if-no-files-found: error

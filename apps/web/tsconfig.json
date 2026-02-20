@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "../..",
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": [],
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "paths": {
+      "@cloudtask/shared": ["../../packages/shared/src/index"],
+      "@cloudtask/shared/*": ["../../packages/shared/src/*"]
+    }
+  },
+  "include": ["src/**/*", "vite-env.d.ts", "../../packages/shared/src/**/*"],
+  "references": [
+    { "path": "./tsconfig.node.json" }
+  ]
+}

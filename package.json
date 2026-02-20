@@ -1,0 +1,15 @@
+{
+  "name": "cloudtask",
+  "private": true,
+  "scripts": {
+    "dev:api": "cd apps/api && npx wrangler dev",
+    "dev:web": "cd apps/web && npm run dev",
+    "build:web": "cd apps/web && npm run build",
+    "test:api": "cd apps/api && npx vitest run",
+    "test:web": "cd apps/web && npx vitest run",
+    "test:shared": "cd packages/shared && npx vitest run",
+    "db:init": "cd apps/api && npx wrangler d1 execute cloudtask-db --local --file=./schema.sql",
+    "db:seed": "cd apps/api && npx wrangler d1 execute cloudtask-db --local --file=./seed.sql",
+    "install:all": "cd packages/shared && npm install && cd ../../apps/api && npm install && cd ../web && npm install"
+  }
+}

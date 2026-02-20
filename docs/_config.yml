@@ -1,0 +1,22 @@
+title: CloudTask Docs
+description: CloudTask - Cloudflareエコシステム上に構築されたプロジェクト管理ツールのドキュメント
+baseurl: "/CloudTask"
+url: "https://DEmodoriGatsuO.github.io"
+
+theme: minima
+
+markdown: kramdown
+
+# docs/wiki/ 以下もページとして含める
+include:
+  - wiki
+
+nav:
+  - title: ホーム
+    url: /CloudTask/
+  - title: 現状の課題
+    url: /CloudTask/wiki/Current-Issues/
+  - title: ロードマップ
+    url: /CloudTask/wiki/Roadmap/
+  - title: 設計上の判断
+    url: /CloudTask/wiki/Architecture-Decisions/

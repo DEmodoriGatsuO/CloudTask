@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cloudtask-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // D1 Database
+  // Create with: npx wrangler d1 create cloudtask-db
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cloudtask-db",
+      "database_id": "YOUR_D1_DATABASE_ID"
+    }
+  ],
+
+  // KV Namespaces
+  // Create with: npx wrangler kv namespace create SESSIONS
+  //              npx wrangler kv namespace create CACHE
+  "kv_namespaces": [
+    {
+      "binding": "SESSIONS",
+      "id": "YOUR_KV_SESSIONS_ID"
+    },
+    {
+      "binding": "CACHE",
+      "id": "YOUR_KV_CACHE_ID"
+    }
+  ],
+
+  // R2 Bucket (optional - required for file attachments)
+  // Enable R2 in Cloudflare Dashboard first, then:
+  // Create with: npx wrangler r2 bucket create cloudtask-files
+  "r2_buckets": [
+    {
+      "binding": "FILES",
+      "bucket_name": "cloudtask-files"
+    }
+  ],
+
+  // Durable Objects
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NOTIFICATIONS",
+        "class_name": "NotificationManager"
+      }
+    ]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["NotificationManager"]
+    }
+  ],
+
+  // Cron Triggers (daily at 18:00 UTC = 03:00 JST)
+  "triggers": {
+    "crons": ["0 18 * * *"]
+  },
+
+  // Environment Variables
+  // JWT_SECRET MUST be set via Cloudflare Secrets (never in this file):
+  //   npx wrangler secret put JWT_SECRET
+  "vars": {
+    "JWT_EXPIRY": "604800",
+    "ALLOWED_ORIGINS": "https://YOUR_PAGES_DOMAIN.pages.dev"
+  }
+}

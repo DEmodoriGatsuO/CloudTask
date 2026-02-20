@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Cloudflare / Wrangler
+.wrangler/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs & temp
+*.log
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Claude Code internal files
+.claude/
+
+# Windows artifacts
+nul
+
+# Internal development notes (not for public)
+CLAUDE.md
+memo.md
+todo.md
+TODO.md
+target.md
+HANDOVER.md
+PROMPTS.md
+plan.md
+IMPROVEMENT_TASKS.md
+
+# Secrets & credentials (local only)
+secrets/
+
+# Production env (contains API URL, keep local)
+.env.production

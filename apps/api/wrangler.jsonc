@@ -1,0 +1,66 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cloudtask-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // D1 Database
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cloudtask-db",
+      "database_id": "e9ed4977-8f7c-47f8-9aad-ed8349abb712"
+    }
+  ],
+
+  // KV Namespaces
+  "kv_namespaces": [
+    {
+      "binding": "SESSIONS",
+      "id": "7199ba2a030c4e3fa5184156cb50f9a4"
+    },
+    {
+      "binding": "CACHE",
+      "id": "0d8a20da0f5e44cebaaa6fa2e63749f6"
+    }
+  ],
+
+  // R2 Bucket
+  "r2_buckets": [
+    {
+      "binding": "FILES",
+      "bucket_name": "cloudtask-files"
+    }
+  ],
+
+  // Durable Objects
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NOTIFICATIONS",
+        "class_name": "NotificationManager"
+      }
+    ]
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["NotificationManager"]
+    }
+  ],
+
+  // Cron Triggers (daily at 18:00 UTC = 03:00 JST)
+  "triggers": {
+    "crons": ["0 18 * * *"]
+  },
+
+  // Environment Variables
+  // NOTE: JWT_SECRET is managed via Cloudflare Secrets, not here.
+  //   Set it with: npx wrangler secret put JWT_SECRET
+  "vars": {
+    "JWT_EXPIRY": "604800",
+    "ALLOWED_ORIGINS": "https://cloudtask-web.pages.dev"
+  }
+}
