@@ -51,11 +51,6 @@
     }
   ],
 
-  // Cron Triggers (daily at 18:00 UTC = 03:00 JST)
-  "triggers": {
-    "crons": ["0 18 * * *"]
-  },
-
   // Environment Variables
   // NOTE: JWT_SECRET is managed via Cloudflare Secrets, not here.
   //   Set it with: npx wrangler secret put JWT_SECRET

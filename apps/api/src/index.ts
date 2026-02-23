@@ -25,7 +25,6 @@ import { dashboardRoutes } from './routes/dashboard';
 import { reportsRoutes } from './routes/reports';
 import { csvRoutes } from './routes/csv';
 import { NotificationManager } from './durable-objects/notification-manager';
-import { DELETE_STATEMENTS, SEED_SQL } from './seed-data';
 import type { Bindings } from './env';
 
 const app = new Hono<AppEnv>();
@@ -78,21 +77,4 @@ export { NotificationManager };
 
 export default {
   fetch: app.fetch,
-  async scheduled(event: ScheduledEvent, env: Bindings, ctx: ExecutionContext) {
-    console.log('[Cron] Seed data reset started at', new Date().toISOString());
-
-    const db = env.DB;
-
-    // Delete all existing data (order matters due to foreign keys)
-    for (const stmt of DELETE_STATEMENTS) {
-      await db.exec(stmt);
-    }
-    console.log('[Cron] Existing data deleted');
-
-    // Re-insert seed data
-    await db.exec(SEED_SQL);
-    console.log('[Cron] Seed data re-inserted');
-
-    console.log('[Cron] Seed data reset completed at', new Date().toISOString());
-  },
 };
