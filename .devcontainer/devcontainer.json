@@ -1,0 +1,45 @@
+{
+  "name": "CloudTask Dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+
+  // ポートフォワード
+  "forwardPorts": [5173, 8787],
+  "portsAttributes": {
+    "5173": { "label": "Web (Vite)", "onAutoForward": "notify" },
+    "8787": { "label": "API (Wrangler)", "onAutoForward": "notify" }
+  },
+
+  // コンテナ起動後に実行
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  // VS Code 拡張機能（推奨）
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-typescript-next",
+        "Prisma.prisma",
+        "EditorConfig.EditorConfig",
+        "christian-kohler.path-intellisense",
+        "PKief.material-icon-theme"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "typescript.preferences.importModuleSpecifier": "relative"
+      }
+    }
+  },
+
+  // コンテナ内ユーザー
+  "remoteUser": "node"
+}

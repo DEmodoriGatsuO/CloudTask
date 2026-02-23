@@ -12,13 +12,16 @@ dist/
 .env.local
 .env.*.local
 *.local
+.env.production
 
 # OS
 .DS_Store
 Thumbs.db
+nul
 
-# IDE
-.vscode/
+# IDE（ユーザー固有設定のみ除外）
+.vscode/settings.json
+.vscode/*.code-workspace
 .idea/
 
 # Logs & temp
@@ -37,15 +40,12 @@ coverage/
 # Claude Code internal files
 .claude/
 
-# Windows artifacts
-nul
-
-# Internal development notes (not for public)
-CLAUDE.md
+# Internal development notes
+secrets/
 memo.md
 todo.md
 TODO.md
-target.md
+CLAUDE.md
 HANDOVER.md
 PROMPTS.md
 plan.md
@@ -53,6 +53,3 @@ IMPROVEMENT_TASKS.md
 
 # Secrets & credentials (local only)
 secrets/
-
-# Production env (contains API URL, keep local)
-.env.production
